@@ -1,6 +1,8 @@
 services:
   backend:
-    image: effective-backend:v1.5
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
     networks:
       - main-network
     # Healthcheck using pure Python to avoid installing curl/wget
