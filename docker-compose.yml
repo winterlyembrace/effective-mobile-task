@@ -1,5 +1,6 @@
 services:
   backend:
+    image: effective-backend:v1.0
     build:
       context: ./backend
       dockerfile: Dockerfile
