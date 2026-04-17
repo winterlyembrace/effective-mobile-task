@@ -1,11 +1,29 @@
 services:
   backend:
     image: effective-backend:v1.5
+    networks:
+      - main-network
+    # Healthcheck using pure Python to avoid installing curl/wget
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8080/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+
   nginx:
     image: nginx:1.19-alpine
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-    ports:
-      - 80:80
+    networks:
+      - main-network
+    port:
+      - "80:80"
     depends_on:
-      - backend
+      backend:
+        condition: service_healthy
+
+networks:
+  main-network:
+    driver: bridge
+
