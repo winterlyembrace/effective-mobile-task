@@ -12,9 +12,9 @@ class MyHandler(BaseHTTPRequestHandler):
         # Main application endpoint
         elif self.path == '/':
             self.send_response(200)
-            self.send_header('Content-type', 'text/html; charset=utf-8')
+            self.send_header('Content-type', 'text/plain; charset=utf-8')
             self.end_headers()
-            response = "<h1>Hello from Effective Mobile!</h1>"
+            response = "Hello from Effective Mobile!"
             self.wfile.write(response.encode('utf-8'))
 
         # Return 404 for any other undefined paths
