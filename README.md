@@ -29,7 +29,7 @@ Expected Output:
 ```bash
 HTTP/1.1 200 OK
 ...
-<h1>Hello from Effective Mobile!</h1>
+Hello from Effective Mobile!
 ```
 
 To check the health check endpoint:
@@ -52,3 +52,28 @@ Schema (ASCII):
 ```ASCII
 User (curl) -> [ Nginx (Port 80) ] -> [ Docker Network ] -> [ Backend (Port 8080) ]
 ```
+
+# 📂 Project Structure
+```Plaintext
+├── backend/
+│   ├── Dockerfile      # Multi-stage-ready non-root build
+│   └── app.py          # Python HTTP server with /health endpoint
+├── nginx/
+│   └── nginx.conf      # Custom reverse proxy configuration
+├── docker-compose.yml  # Services orchestration
+└── README.md           # Documentation
+```
+
+# 🛡 Security & Best Practices
+* **Non-root user**: Backend runs under a dedicated `appuser` (hardening).
+* **Network Isolation**: Backend is not exposed to the host; accessible only via Nginx.
+* **Read-only**: Nginx configuration is mounted as read-only.
+* **Minimal Images**: Used `alpine` to reduce attack surface and size.
+
+
+# 🛠 Technologies Used
+* **Python 3.13.13-alpine3.23** — Minimal base image for the application.
+* **Nginx 1.19-alpine** — Lightweight and secure web server.
+* **Docker & Docker Compose** — Containerization and orchestration.
+
+
